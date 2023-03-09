@@ -4,6 +4,7 @@ Instructor: Thyago Mota
 Description: A simple FMS for employees
 """
 
+
 class Entity: 
     """
     models an entity's interface with a key
@@ -81,7 +82,7 @@ class EmployeeCRUD(CRUD):
         """
         an employee entity should only be created if it does not exist
         """
-        key = entity.get_key()
+        key = entity.get_key
         result = False
         if not self.read(key): 
             try: 
@@ -100,13 +101,29 @@ class EmployeeCRUD(CRUD):
             * if the entity is found, return it
             * else, return None
         """
-        pass
+        import csv
+        employee = None
+        with open('employees.csv', 'r') as f:
+            for row in csv.reader(f, delimiter=',', quotechar='"'):
+                if int(row[0]) == key:
+                    employee = Employee(int(row[0]), row[1], row[2])
+        f.close()
+
+        return employee
+
 
     def update(self, entity) -> bool: 
         """
         TODO #2: delete the entity (using the key) then re-create it
         """
-        pass
+
+        key = entity.get_key()
+        if not self.delete(key):
+            return False
+        if not self.create(entity):
+            return False
+        return True
+
 
     def delete(self, key) -> bool: 
         """
@@ -116,7 +133,20 @@ class EmployeeCRUD(CRUD):
             * re-open the (storage) file for writing
             * copy all of the entities, except the one that should be deleted
         """
-        pass
+        try:
+            file = open('employees.csv', "r")
+            lines = file.readlines()
+            file = open('employees.csv', "w")
+            for line in lines:
+                line = line.strip()
+                cols = line.split(",")
+                id = int(cols[0])
+                if id == key:
+                    continue
+                file.write(line + "\n")
+            result = True
+        finally:
+            return result
                 
 def menu(): 
     print("1. Create")

@@ -1,0 +1,3 @@
+Candidates(ssn: integer, name: string)
+JobPositions(number: integer, title: string, deparment: string)
+Applications(candidateId: Integer, positionNumber: integer)

@@ -1,0 +1,3 @@
+Shippings(order_number: integer, address: string)
+Items(seq_number: integer, description: string)
+Orders(order_number: integer, seq_number: integer)

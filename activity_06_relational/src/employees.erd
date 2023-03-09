@@ -1,4 +1,4 @@
-erdiagram buildings
+erdiagram Employees
 notation=crowsfoot
 
 entity Employees {

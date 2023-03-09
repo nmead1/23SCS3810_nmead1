@@ -1,0 +1,3 @@
+Employees(id: integer, name: string, wage: double, sex: integer, supervisor_id: integer)
+Supervisors(id: integer, salary: double)
+WorkingHours(employee_id: integer, date: date, start: time, end: time, hour: integer, supervisor_id: integer)

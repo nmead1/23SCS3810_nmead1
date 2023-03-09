@@ -1,0 +1,14 @@
+erdiagram companies
+notation=crowsfoot
+entity Companies {
+
+}
+
+entity Presidents {
+
+}
+
+relationship runs {
+    Presidents[0..1] ->
+    Companies[0..1]
+}

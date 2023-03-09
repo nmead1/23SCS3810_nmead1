@@ -1,7 +1,7 @@
 """
 CS3810: Principles of Database Systems
 Instructor: Thyago Mota
-Student: 
+Student: Nathan Mead
 Description: A simple FMS for projects
 """
 
@@ -132,7 +132,29 @@ class ProjectCRUD(CRUD):
         * else, return None
     """
     def read(self, key) -> Project: 
-        return None
+        project = None
+        try:
+            with open(os.path.join('db', PRJ_FILE_NAME),'r') as file:
+                lines = file.readlines()
+                file.close()
+                for line in lines:
+                    line = line.strip()
+                    title, start, end, budget = line.split(",")
+                    budget = int(budget)
+                    if title == key:
+                        with open(os.path.join('db', title, EMP_FILE_NAME), 'r') as file:
+                            lines = file.readlines()
+                            file.close()
+                            employees = []
+                            for line in lines:
+                                line = line.strip()
+                                id, name, department = line.split(",")
+                                id = int(id)
+                                employees.append(Employee(id, name, department))
+                        project = Project(title, start, end, budget, employees)
+                        break
+        finally:
+            return project
 
     def delete(self, key) -> bool: 
         result = False
@@ -165,7 +187,26 @@ class DB:
         * if the employee is not found, return None
     """
     def find_employee(id):
-        return None
+        employee = None
+        try:
+            with open(os.path.join('db', PRJ_FILE_NAME), 'r') as file:
+                lines = file.readlines()
+                file.close()
+                for line in lines:
+                    line = line.strip()
+                    cols = line.split(",")
+                    title = cols[0]
+                    with open(os.path.join('db', title, EMP_FILE_NAME), 'r') as file:
+                        eLines = file.readlines()
+                        for eLine in eLines:
+                            eLine = eLine.strip()
+                            eId, name, department = eLine.split(",")
+                            eId = int(eId)
+                            if (eId == id):
+                                employee = Employee(eId, name, department)
+                                break
+        finally:
+            return employee
        
 def menu(): 
     print("1. Create")
@@ -198,6 +239,11 @@ if __name__ == "__main__":
                     department = input("department? ")
                     employee = Employee(id, name, department)
                     employees.append(employee)
+                more = input("Do you have more employees to enter (Y or N) ")
+                more = more.capitalize()
+                if more == "N":
+                    break
+                
             project = Project(title, start, end, budget, employees)
             if prjCRUD.create(project): 
                 print("New project successfully created!")

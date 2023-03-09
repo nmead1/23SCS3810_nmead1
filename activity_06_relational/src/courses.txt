@@ -1,0 +1,3 @@
+Students(id: integer, name: string)
+Courses(number: string, title: string)
+Enrollments(studentId: integer, courseNumber: string)

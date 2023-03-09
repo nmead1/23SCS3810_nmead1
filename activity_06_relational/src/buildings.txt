@@ -1,0 +1,3 @@
+Buildings(name: string, address: string)
+Rooms(floor: string, number: integer)
+Mapping(buildinName: string, floor: string, number: integer)

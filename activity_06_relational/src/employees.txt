@@ -1,0 +1,3 @@
+Employees(ssn: integer, name: string)
+Projects(number: integer, title: string)
+Assignments(employeeId: integer, projectNumber: integer, hours: integer)

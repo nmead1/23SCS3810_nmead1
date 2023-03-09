@@ -1,0 +1,21 @@
+a)	σsex=1(employees)
+b)	πname(σsex=2(employees))
+c)	π name, salary(Supervisors ⨝ Employees)
+d)	Supervisors’ := Supervisors ⨝ Employees
+	Employees E ⨝ Supervisors’ S
+        S’.name = ‘Mary’ and E.id_sup = S’.id 
+e)	πhours(Employee E ⨝ WorkingHours W)
+        E.id= W.employee_id and W.date = 09/15/2020 and E.name = ‘Janet’
+f)	πname(Employee E ⨝ WorkingHours W)
+        E.id= W.employee_id and W.date >= 09/01/2020 and W.date <= 09/30/2020 and W.supvisor_id = null
+g)	πname(Supervisors' S)
+        S'.salary > 65K
+h)  σ(Employees)
+    wage != null and supervisor_id = null 
+
+h alternative) σ(Employees left anti-join Supervisors)
+                    supervisor_id = null
+
+i) (Supervisors left anti-join Employees)
+
+j) 

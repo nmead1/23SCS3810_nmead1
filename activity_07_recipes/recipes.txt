@@ -1,0 +1,6 @@
+Recipes(id: integer, name: string, author: string)
+Tags(meatypes: string)
+Recipe_Tags(recipeId: integer, mealtypes: string)
+Ingredients(short_name: string, description:string)
+IngredientList(recipeId: integer, short_name: string, quantity, unit)
+Steps(recipeId: integer, seq_number: integer, description)

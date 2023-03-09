@@ -41,11 +41,11 @@ entity Customers {
     credit_card
 }
 
-relationship happens_in { 
+relationship happens_at { 
     Events[0..N] -> Venues[1]
 }
 
-relationship organized_into { 
+relationship divided_in { 
     Venues[1] -> Sectors[1..N]
 }
 
@@ -63,6 +63,5 @@ relationship priced {
 }
 
 relationship purchases {
-    Customers[1] -> Seats[1..N] -> EventDays[1..N]
+    Customers[1..N] -> Seats[1..N] -> EventDays[1..N]
 }
-

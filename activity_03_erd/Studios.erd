@@ -1,0 +1,14 @@
+erdiagram studios
+notation = crowsfoot
+
+entity Studios {
+
+}
+
+entity Movies {
+
+}
+
+relationship owns {
+    Studios[0..1] ->  Movies[0..1]
+}

@@ -1,0 +1,37 @@
+erdiagram recipes
+notation = crowsfoot
+
+entity Recipes {
+    Id key
+    name
+    author
+}
+
+entity Tags {
+    mealtypes key
+}
+
+weak entity Steps {
+    seq_number partial-key
+    description
+}
+
+entity Ingredients {
+    Short_name key
+    description
+}
+
+relationship has {
+    Recipes[0..N] -> Tags[0..N]
+}
+
+relationship lists {
+    Recipes[0..N] -> Ingredients[N]
+    quantity
+    unit
+}
+
+relationship defines {
+    Recipes[1] -> Steps[0..N]
+}
+

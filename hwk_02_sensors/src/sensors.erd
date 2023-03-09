@@ -1,6 +1,6 @@
 // CS3810: Principles of Database Systems
 // Instructor: Thyago Mota
-// Student: 
+// Student: Nathan Mead
 // Description: An ERD for Sensors
 
 erdiagram sensors
@@ -12,4 +12,17 @@ entity Manufacturers { }
 entity Measurements { }
 entity Readings { }
 
+relationship builds {
+    Manufacturers[0..1] -> Sensors[N]
+}
 
+relationship has {
+    Types[1] -> Sensors[N]
+}
+relationship generates {
+    Sensors[N] -> Measurements[N]
+}
+
+relationship takes {
+    Measurements[N] -> Readings[N]
+}

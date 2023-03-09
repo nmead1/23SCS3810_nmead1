@@ -1,0 +1,15 @@
+erdiagram movies
+notation = crowsfoot
+
+entity Movies {
+	title
+	length
+	year
+	genre
+}
+entity Stars {
+
+}
+relationship works {
+	Stars[N] -> Movies[N]
+}
