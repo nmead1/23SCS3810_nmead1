@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student(s): 
+-- Student(s): Nathan Mead and Mitchell Thompson
 -- Description: Star Wars Database (SQL Competition)
 
 CREATE DATABASE starwars;
@@ -155,21 +155,79 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 
 -- a) the number of star wars films
 
+SELECT COUNT(*) FROM Films
+WHERE title like 'Star Wars%';
+
 -- b) the age group (description) that has the most fans
+
+SELECT description, COUNT(*) as total FROM AgeGroups A
+LEFT JOIN Fans F
+ON A.seq = F.age
+GROUP BY description
+ORDER BY total
+LIMIT 1;
 
 -- c) the education level (description) with the least number of fans
 
+SELECT description, COUNT(*) as total FROM EducationLevels E
+LEFT JOIN Fans F
+ON E.seq = F.age
+GROUP BY description
+ORDER BY total DESC
+LIMIT 1;
+
 -- d) the name of the star wars characters in alphabetical order
+
+SELECT name FROM Characters
+ORDER BY name;
 
 -- e) the star wars characters that have no fan ratings 
 
+SELECT name FROM Characters C 
+WHERE C.id NOT IN (Select character FROM CharacterRatings);
+
 -- f) the top 3 star wars characters based on fan ratings, showing their names and the average rating (rounded to 2 decimals) that they received 
+
+SELECT name, AVG(CR.rating) FROM Characters C
+LEFT JOIN CharacterRatings CR
+ON C.id = CR.Character
+WHERE CR.rating is not null
+GROUP BY C.id, CR.rating
+ORDER BY CR.rating DESC
+LIMIT 3;
 
 -- g) The ids of the fans that gave a rating of 1 for "Darth Vader", in ascending order, so that they be banned from future star wars views
 
+Select F.id FROM Fans F
+LEFT JOIN CharacterRatings CR
+ON F.id = CR.fan
+LEFT JOIN Characters C
+ON CR.character = C.id
+WHERE C.name = 'Darth Vader' AND CR.rating = 1;
+
 -- h) the top rated star wars film by the fans 
 
+Select F.title, FR.rating FROM films F
+RIGHT JOIN FilmRatings FR
+ON F.id = FR.film
+WHERE FR.rating is not null
+GROUP BY F.title, FR.rating
+ORDER BY FR.rating DESC
+LIMIT 1;
+
 -- j) the top rated film by fans with income '$150,000+'
+
+Select F.title, FR.rating FROM films F
+LEFT JOIN FilmRatings FR
+ON F.id = FR.film
+LEFT JOIN Fans FA
+ON FR.fan = FA.id
+LEFT JOIN IncomeLevels I
+ON FA.income = I.seq
+WHERE FR.rating is not null
+GROUP BY F.title, FR.rating
+ORDER BY FR.rating DESC
+LIMIT 1;
 
 -- k) the number of ratings AND the average rating received by "Princess Leia", rounded to 2 decimals
 
