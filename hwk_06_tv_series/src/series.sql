@@ -84,10 +84,8 @@ ORDER BY actorName;
 
 -- TODO #5) return the names of actors/actresses that didn't appear in any series sorted by actorName
 
-SELECT * FROM Actors A
+SELECT actorName FROM Actors A
 LEFT JOIN Acts B
 ON A.actorId = B.actorId
-LEFT JOIN series C
-ON B.seriesId = C.seriesId
 WHERE B.seriesId IS NULL
 ORDER BY actorName;

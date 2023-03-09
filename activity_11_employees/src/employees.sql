@@ -120,9 +120,7 @@ ON E.deptCode = D.code;
 -- TODO: n) from query ‘m’, how would you do the left anti-join?
 
 SELECT * FROM employees E
-LEFT JOIN departments D
-ON E.deptCode = D.code
-WHERE D.code IS NULL;
+WHERE deptCode IS NULL;
 
 -- TODO: o) show the number of employees per department.
 
