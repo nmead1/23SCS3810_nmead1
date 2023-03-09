@@ -59,10 +59,35 @@ INSERT INTO Acts VALUES (3, 8);
 
 -- TODO #1) return all actors/actresses sorted by actorId
 
+SELECT * FROM Actors
+ORDER BY actorId;
+
 -- TODO #2) return all actresses sorted by actorName
+
+SELECT * FROM Actors
+WHERE sex = 'F'
+ORDER BY actorName;
 
 -- TODO #3) return the counts of actors and actress using two columns: 'sex' and 'total', sorted by sex
 
+SELECT sex, COUNT(*) AS total FROM Actors
+GROUP BY sex
+ORDER BY sex;
+
 -- TODO #4) return the names of the actors/actresses that were in 'The Americans' sorted by actorName
 
+SELECT actorName FROM Actors
+NATURAL JOIN Acts
+NATURAL JOIN Series
+WHERE title = 'The Americans'
+ORDER BY actorName;
+
 -- TODO #5) return the names of actors/actresses that didn't appear in any series sorted by actorName
+
+SELECT * FROM Actors A
+LEFT JOIN Acts B
+ON A.actorId = B.actorId
+LEFT JOIN series C
+ON B.seriesId = C.seriesId
+WHERE B.seriesId IS NULL
+ORDER BY actorName;
