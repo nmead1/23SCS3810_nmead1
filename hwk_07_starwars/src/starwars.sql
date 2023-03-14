@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Nathan Mead
 -- Description: Star Wars Database (SQL Competition)
 
 CREATE DATABASE starwars;
@@ -139,7 +139,7 @@ CREATE TABLE FilmRatings (
     FOREIGN KEY (fan) REFERENCES Fans (id), 
     film INT NOT NULL, 
     FOREIGN KEY (film) REFERENCES Films (id), 
-    PRIMARY KEY (fan, film), 
+    PRIMARY KEY (fan, film),
     rating INT NOT NULL
 );
 
@@ -157,14 +157,67 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 
 -- h) the top rated star wars film by the fans 
 
+Select F.title, ROUND(AVG(FR.rating), 2) as avg FROM films F
+RIGHT JOIN FilmRatings FR
+ON F.id = FR.film
+GROUP BY F.title
+ORDER BY avg DESC
+LIMIT 1;
+
 -- j) the top rated film by fans with income '$150,000+'
+
+Select F.title, ROUND(AVG(FR.rating), 2) as avg FROM films F
+RIGHT JOIN FilmRatings FR
+ON F.id = FR.film
+LEFT JOIN Fans FA
+ON FR.fan = FA.id
+LEFT JOIN IncomeLevels I
+ON FA.income = I.seq
+WHERE I.description = '$150,000+'
+GROUP BY F.title
+ORDER BY avg DESC
+LIMIT 1;
 
 -- k) the number of ratings AND the average rating received by "Princess Leia", rounded to 2 decimals
 
+SELECT C.name, COUNT(CR.rating), ROUND(AVG(CR.rating), 2) FROM characters as C
+LEFT JOIN CharacterRatings as CR
+on C.id = CR.character
+WHERE C.name = 'Princess Leia'
+GROUP BY C.name
+ORDER BY C.name;
+
 -- l) the average rating of "Star Wars: Episode V The Empire Strikes Back", rounded to 2 decimals
+
+Select F.title, ROUND(AVG(FR.rating), 2) as avg FROM films F
+RIGHT JOIN FilmRatings FR
+ON F.id = FR.film
+WHERE F.title LIKE 'Star Wars: Episode V%'
+GROUP BY F.title;
 
 -- m) the name of the character that received the least number of ratings 
 
+Select C.name, Count(CR.rating) as count FROM characters C
+LEFT JOIN CharacterRatings CR
+ON C.id = CR.character
+GROUP BY C.name
+ORDER BY count
+LIMIT 1;
+
 -- n) the favorite character according the yongest fan audience
 
+SELECT C.name, ROUND(AVG(CR.rating), 2) as avg FROM Characters c
+RIGHT JOIN CharacterRatings CR
+ON C.id = CR.character
+GROUP BY C.name
+ORDER BY avg DESC
+LIMIT 1;
+
 -- o) the income levels (descriptions) that has at least 100 fans, ordered by income sequential number
+
+SELECT I.description, COUNT(i.seq) as count FROM Fans f
+RIGHT JOIN IncomeLevels I
+ON F.income = I.seq
+GROUP BY I.seq, I.description
+HAVING COUNT(i.seq) >= 100
+ORDER BY I.seq;
