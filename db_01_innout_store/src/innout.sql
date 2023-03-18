@@ -107,7 +107,7 @@ ORDER BY gender;
 
 -- d) a list of all item codes (labeled as code) and descriptions (labeled as description) followed by their category descriptions (labeled as category) in numerical order of their codes (items that do not have a category should not be displayed)
 
-SELECT I.id, I.description, C.description as category FROM Items I
+SELECT I.id as code, I.description, C.description as category FROM Items I
 LEFT JOIN Categories C
 ON I.category_code = C.code
 WHERE C.description IS NOT NULL
@@ -136,14 +136,14 @@ WHERE id = :'ID';
 
 -- h) a list describing all items purchased by the customer identified by the variable "ID" (you must used the variable), showing, the date of the purchase (labeled as date), the time of the purchase (labeled as time and in hh:mm:ss format), the item's description (labeled as item), the quantity purchased (labeled as qtt), the item price (labeled as price), and the total amount paid (labeled as total_paid).
 
-SELECT C.name, S.date, S.time, I.description as item, S.quantity as qtt, P.item_price as price, S.total as total_paid  FROM PURCHASES P
-LEFT JOIN  Customers C
-ON P.customer_id = C.id
-LEFT JOIN Sales S
+SELECT C.name, S.date, S.time, I.description as item, P.qty as qtt, P.item_price as price, (P.item_price * P.qty) as total_paid  FROM PURCHASES P
+JOIN Sales S
 ON P.sales_id = S.id
-LEFT JOIN Items I
+JOIN  Customers C
+ON S.customer_id = C.id
+JOIN Items I
 ON P.item_id = I.id
-WHERE P.customer_id = :'ID';
+WHERE S.customer_id = :'ID';
 
 -- i) the total amount of sales per day showing the date and the total amount paid in chronological order
 
