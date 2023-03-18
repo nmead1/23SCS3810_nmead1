@@ -85,10 +85,10 @@ INSERT INTO Sales (quantity, total, date, time, customer_id) VALUES
 (2, 7.48, '2023-3-14', '13:00', 2),
 (3, 17.37, '2023-2-28', '08:00', 4);
 
-INSERT INTO Purchases (sales_id, item_id, item_price) VALUES
-(1, 1, .99), (1, 2, 4.79), (1, 3, 8.49), (1, 4, 6.49), (1, 5, 3.39),
-(2, 6, 5.49), (2, 7, 1.99),
-(3, 3, 8.49), (3, 5, 3.39), (3, 6, 5.49);
+INSERT INTO Purchases (sales_id, item_id, item_price, qty) VALUES
+(1, 1, .99, 1), (1, 2, 4.79, 1), (1, 3, 8.49, 1), (1, 4, 6.49, 1), (1, 5, 3.39, 1),
+(2, 6, 5.49, 1), (2, 7, 1.99, 1),
+(3, 3, 8.49, 1), (3, 5, 3.39, 1), (3, 6, 5.49, 1);
 
 -- TODO: SQL queries
 
@@ -153,7 +153,26 @@ ORDER BY date;
 
 -- j) the description of the top item (labeled as item) in sales with the total sales amount (labeled as total_paid)
 
+SELECT I.description as item, SUM(P.item_price) as total_paid FROM Items I
+LEFT JOIN Purchases P
+ON I.id = P.item_id
+GROUP BY I.description
+ORDER BY total_paid DESC
+LIMIT 1;
 
 -- k) the descriptions of the top 3 items (labeled as item) in number of times they were purchased, showing that quantity as well (labeled as total)
 
+SELECT I.description as item, SUM(P.qty) as total FROM Items I
+LEFT JOIN Purchases P
+ON I.id = P.item_id
+GROUP BY I.description
+ORDER BY total DESC
+LIMIT 3;
+
 -- l) the name of the customers who never made a purchase 
+
+SELECT C.name FROM Customers C
+LEFT JOIN Sales S
+ON C.id = S.customer_id
+WHERE S.id IS NULL
+ORDER BY C.name;
