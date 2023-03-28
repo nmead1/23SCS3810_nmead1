@@ -11,7 +11,7 @@ Once you have **virtualenv** installed, you can setup a virtual environment for 
 ```
 virtualenv build
 cd build
-source bin/activate
+.\Scripts\activate
 ```
 
 Once "in" the virtual environment, you can install all of the packages required for your project (without the risk of conflicts with other projects). 
