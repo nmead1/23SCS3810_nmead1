@@ -11,6 +11,53 @@ CREATE DATABASE ipps;
 
 -- create tables
 
+CREATE TABLE ProviderServices (
+    Rndrng_Prvdr_CCN INT(6),
+    DRG_Cd INT,
+    FOREIGN KEY (Rndrng_Prvdr_CCN) REFERENCES Services(Rndrng_Prvdr_CCN),
+    FOREIGN KEY (DRG_Cd) REFERENCES Services(DRG_Cd),
+    PRIMARY KEY(Rndrng_Prvdr_CCN, DRG_Cd)
+);
+
+CREATE TABLE Providers (
+    Rndrng_Prvdr_CCN INT PRIMARY KEY,
+    Rndrng_Prvdr_Org_Name VARCHAR(55) NOT NULL,
+    Rndrng_Prvdr_St VARCHAR(45),
+    Rndrng_Prvdr_City VARCHAR(20),
+    Rndrng_Prvdr_Zip5 INT,
+    Rndrng_Prvdr_RUCA INT,
+    FOREIGN KEY (Rndrng_Prvdr_City) REFERENCES Cities(Rndrng_Prvdr_City),
+    FOREIGN KEY (Rndrng_Prvdr_Zip5) REFERENCES Cities(Rndrng_Prvdr_Zip5),
+    FOREIGN KEY (Rndrng_Prvdr_RUCA) REFERENCES RUCAs(Rndrng_Prvdr_RUCA)
+);
+
+CREATE TABLE Cities (
+    Rndrng_Prvdr_City VARCHAR(20),
+    Rndrng_Prvdr_Zip5 INT,
+    Rndrng_Prvdr_State_FIPS INT,
+    PRIMARY KEY(Rndrng_Prvdr_City, Rndrng_Prvdr_Zip5),
+    FOREIGN KEY (Rndrng_Prvdr_State_FIPS) REFERENCES States(Rndrng_Prvdr_State_FIPS)
+);
+
+CREATE TABLE States (
+    Rndrng_Prvdr_State_FIPS INT PRIMARY KEY,
+    Rndrng_Prvdr_State_Abrvtn CHAR(2) NOT NULL
+);
+
+CREATE TABLE RUCAs (
+    Rndrng_Prvdr_RUCA INT PRIMARY KEY,
+    Rndrng_Prvdr_RUCA_Desc VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Services (
+    DRG_Cd INT PRIMARY KEY,
+    DRG_Desc VARCHAR(100) NOT NULL,
+    Tot_Dschrgs INT,
+    Avg_Submtd_Cvrd_Chrg FLOAT,
+    Avg_Tot_Pymt_Amt FLOAT,
+    Avg_Mdcr_Pymt_Amt FLOAT
+);
+
 -- create user with appropriate access to the tables
 
 -- queries
