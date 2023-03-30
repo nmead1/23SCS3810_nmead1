@@ -3,6 +3,7 @@
 To properly secure your database connection parameters, create a **ConfigFile.properties** file (a text file) with the following values: 
 
 ```
+[db]
 host: localhost 
 port: 5432
 dbname: hr
