@@ -13,7 +13,7 @@ Next, create a virtual environment and install the following modules:
 ```
 psycopg2
 configparser
-sqlachemy
+sqlalchemy
 ```
 
 After installing the required modules, write the following ConfigFile.properties file: 
@@ -23,7 +23,7 @@ After installing the required modules, write the following ConfigFile.properties
 host=localhost 
 port=5432
 dbname=music
-user=music_manager
+user=music_admin
 password=135791
 ```
 

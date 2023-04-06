@@ -45,5 +45,4 @@ CREATE PROCEDURE number_albums(IN art VARCHAR(30))
         END;
     $$;
 
-
-
+CALL number_albums('Sepultura');
