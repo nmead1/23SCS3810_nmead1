@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Nathan Mead
 -- Description: SQL for the camp database
 
 CREATE DATABASE camp; 
